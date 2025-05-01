@@ -1,7 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-
 def sigmoid(x):
     return 1 / (1 + np.exp(-x))
 
@@ -19,8 +18,8 @@ def evaluate(X, y, weights, bias):
     return np.mean(predictions == y)
 
 learning_rates = [1.0, 0.1, 0.01, 0.001, 3.0]
-epochs = 200
-runs_per_lr = 5
+epochs = 500
+runs = 25
 
 X_train, y_train = load_data("train.txt")
 X_dev, y_dev = load_data("dev.txt")
@@ -29,7 +28,7 @@ X_dev, y_dev = load_data("dev.txt")
 def run_experiment(lr):
     train_accs_all = []
     dev_accs_all = []
-    for seed in range(runs_per_lr):
+    for seed in range(runs):
         np.random.seed(seed)
         weights = np.random.randn(X_train.shape[1])
         bias = 0.0
@@ -50,7 +49,6 @@ def run_experiment(lr):
 
     return np.array(train_accs_all), np.array(dev_accs_all)
 
-# Main execution
 if __name__ == "__main__":
     for learning_rate in learning_rates:
         train_accs, dev_accs = run_experiment(learning_rate)

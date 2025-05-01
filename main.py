@@ -64,10 +64,10 @@ def mlp_sgd(X, y, learning_rate, epochs, hidden_dimensions = 10):
     for epoch in range(epochs):
         indices = np.random.permutation(len(X))
         for index in indices:
-            xi = X[index:index+1]
-            yi = y[index:index+1]
-            y_hat, h, z = mlp_forward_pass(xi, weights, bias, out_weights)
-            gradient_weights, gradient_bias, gradient_output_weights = mlp_backward_pass(xi, yi, y_hat, h, z, out_weights)
+            x_i = X[index:index+1]
+            y_i = y[index:index+1]
+            y_hat, h, z = mlp_forward_pass(x_i, weights, bias, out_weights)
+            gradient_weights, gradient_bias, gradient_output_weights = mlp_backward_pass(x_i, y_i, y_hat, h, z, out_weights)
             weights -= learning_rate * gradient_weights
             bias -= learning_rate * gradient_bias
             out_weights -= learning_rate * gradient_output_weights
@@ -85,7 +85,6 @@ learning_rate = float(sys.argv[2])
 epochs = int(sys.argv[3])
 model_type = sys.argv[4] if len(sys.argv) > 4 and sys.argv[4] in {"mlp", "mlp_sgd"} else "logistic"
 dev_file = sys.argv[5] if len(sys.argv) > 5 else None
-
 X_train, y_train = load_data(train_file)
 
 if model_type == "logistic":
